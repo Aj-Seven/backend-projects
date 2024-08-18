@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Colors
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+NC='\033[0m' # No Color
+
+# Check if the username is provided
+if [ -z "$1" ]; then
+    echo -e "${RED}Usage: $0 <github-username>${NC}"
+    exit 1
+fi
+
+# GitHub username provided as the first argument
+username=$1
+
+# GitHub API URL to fetch user events
+url="https://api.github.com/users/$username/events"
+
+# Fetch user events using curl
+response=$(curl -s "$url")
+
+# Check if the response is empty
+if [ -z "$response" ]; then
+    echo -e "${RED}No events found or failed to fetch data.${NC}"
+    exit 1
+fi
+
+# Print user activity in the bullet line format
+echo -e "${BLUE}Recent activity for GitHub user: $username${NC}"
+echo "$response" | jq -r '
+    .[] |
+    if .type == "PushEvent" then
+        "• Pushed \(.payload.commits | length) commit(s) to \(.repo.name)\n"
+    elif .type == "IssuesEvent" and .payload.action == "opened" then
+        "• Opened a new issue in \(.repo.name)\n"
+    elif .type == "WatchEvent" then
+        "• Starred \(.repo.name)\n"
+    elif .type == "CreateEvent" and .payload.ref_type == "repository" then
+        "• Created a new repository \(.repo.name)\n"
+    elif .type == "ForkEvent" then
+        "• Forked \(.repo.name) to \(.payload.forkee.full_name)\n"
+    elif .type == "PullRequestEvent" and .payload.action == "opened" then
+        "• Opened a pull request in \(.repo.name)\n"
+    elif .type == "PullRequestEvent" and .payload.action == "closed" and .payload.pull_request.merged == true then
+        "• Merged a pull request in \(.repo.name)\n"
+    else
+        empty
+    end
+' | grep -v '^empty$' || {
+    echo -e "${RED}An error occurred while parsing the JSON response.${NC}"
+}
+
