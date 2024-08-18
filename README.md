@@ -1,2 +1,2 @@
 # Roadmap Projects
-- [GitHub Activity Tracker](https://github.com/Aj-Seven/roadmap-projects) - *Shell Script*
+- [GitHub Activity Tracker](https://github.com/Aj-Seven/roadmap-projects/tree/master/github-user-activity) - *Shell Script*
