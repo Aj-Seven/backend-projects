@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Unit Converter</h1>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="loadForm('length.html')">Length</button>
+            <button class="tab-button" onclick="loadForm('weight.html')">Weight</button>
+            <button class="tab-button" onclick="loadForm('temperature.html')">Temperature</button>
+        </div>
+
+        <div id="form-container">
+            <!-- The forms will be loaded here -->
+        </div>
+
+        <div id="result-container" class="result-container" style="display: none;">
+            <p id="result-text"></p>
+            <button class="reset-button" onclick="reset()">Reset</button>
+        </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+</body>
+</html>
+
