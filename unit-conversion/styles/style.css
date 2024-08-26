@@ -20,6 +20,10 @@ h1 {
     margin-bottom: 20px;
 }
 
+#title {
+    text-align: left;
+}
+
 .tabs {
     display: flex;
     justify-content: space-around;
