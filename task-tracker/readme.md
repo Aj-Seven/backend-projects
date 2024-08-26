@@ -21,10 +21,10 @@ This is a simple command-line interface (CLI) application for managing tasks.
 **Clone the Repository**
 
    ```bash
-   git clone https://github.com/Aj-Seven/roadmap-projects
+   git clone --depth=1 https://github.com/Aj-Seven/backend-projects
 
    # Navigate to the project Directory
-   cd roadmap-projects/task-cli
+   cd backend-projects/task-cli
    ```
 ## Usage
 

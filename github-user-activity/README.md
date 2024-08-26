@@ -17,11 +17,11 @@ This script shows recent GitHub activities using API via simple Shell Script.
 - Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/Aj-Seven/roadmap-projects.git
+   git clone --depth=1 https://github.com/Aj-Seven/backend-projects.git
    ```
 - Now go to cloned directory
    ```bash
-   cd roadmap-projects/github-activity
+   cd backend-projects/github-activity
    ```
 - Give permission and run the script
    ```bash

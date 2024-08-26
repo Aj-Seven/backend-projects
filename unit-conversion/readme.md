@@ -15,10 +15,10 @@ The Unit Converter web app allows users to convert between length, weight, and t
 **Clone the Repository**
 
    ```bash
-   git clone https://github.com/Aj-Seven/roadmap-projects
+   git clone --depth=1 https://github.com/Aj-Seven/backend-projects
 
    # Navigate to the project Directory
-   cd roadmap-projects/unit-conversion
+   cd backend-projects/unit-conversion
    ```
 **Now Open the `index.html` file via any browser**
 
