@@ -26,10 +26,16 @@ function writeTasks(tasks) {
   fs.writeFileSync(tasksFilePath, JSON.stringify(tasks, null, 2), "utf8");
 }
 
-// Function to get the next unique ID
+// Function to get the next unique ID and use deleted id too if available
 function getNextId(tasks) {
   const ids = tasks.map((task) => task.id);
-  return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+  ids.sort((a, b) => a - b);
+  let nextId = 1;
+  for (const id of ids) {
+    if (id !== nextId) break;
+    nextId += 1;
+  }
+  return nextId;
 }
 
 // Function to list tasks by status
