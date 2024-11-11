@@ -41,11 +41,15 @@ function listTasks(status) {
     if (status.toLowerCase() === "done") {
       filteredTasks = tasks.filter((task) => task.completed);
     } else if (status.toLowerCase() === "to-do") {
-      filteredTasks = tasks.filter((task) => !task.completed && !task.inProgress);
+      filteredTasks = tasks.filter(
+        (task) => !task.completed && !task.inProgress
+      );
     } else if (status.toLowerCase() === "in-progress") {
       filteredTasks = tasks.filter((task) => task.inProgress);
     } else {
-      console.log(`${colors.red}Invalid status. Use 'done', 'to-do', or 'in-progress'.${colors.reset}`);
+      console.log(
+        `${colors.red}Invalid status. Use 'done', 'to-do', or 'in-progress'.${colors.reset}`
+      );
       return;
     }
   }
@@ -53,10 +57,18 @@ function listTasks(status) {
   if (filteredTasks.length === 0) {
     console.log(`${colors.yellow}No tasks found.${colors.reset}`);
   } else {
-    console.log(`${colors.cyan}Listing ${status ? status : "all"} tasks:${colors.reset}`);
+    console.log(
+      `${colors.cyan}Listing ${status ? status : "all"} tasks:${colors.reset}`
+    );
     filteredTasks.forEach((task) => {
       console.log(
-        `${task.id}. ${task.description} [${task.completed ? colors.green + "Done" : task.inProgress ? colors.yellow + "In-progress" : colors.red + "To-do"}${colors.reset}]`
+        `${task.id}. ${task.description} [${
+          task.completed
+            ? colors.green + "Done"
+            : task.inProgress
+            ? colors.yellow + "In-progress"
+            : colors.red + "To-do"
+        }${colors.reset}]`
       );
     });
   }
@@ -73,7 +85,9 @@ function addTask(description) {
   };
   tasks.push(newTask);
   writeTasks(tasks);
-  console.log(`${colors.green}Task added successfully! (ID: ${newTask.id})${colors.reset}`);
+  console.log(
+    `${colors.green}Task added successfully! (ID: ${newTask.id})${colors.reset}`
+  );
 }
 
 // Function to update a task's description
@@ -84,7 +98,9 @@ function updateTask(id, newDescription) {
   if (task) {
     task.description = newDescription;
     writeTasks(tasks);
-    console.log(`${colors.green}Task ID ${id} updated successfully!${colors.reset}`);
+    console.log(
+      `${colors.green}Task ID ${id} updated successfully!${colors.reset}`
+    );
   } else {
     console.log(`${colors.red}Task with ID ${id} not found.${colors.reset}`);
   }
@@ -97,7 +113,9 @@ function deleteTask(id) {
 
   if (newTasks.length < tasks.length) {
     writeTasks(newTasks);
-    console.log(`${colors.green}Task ID ${id} deleted successfully!${colors.reset}`);
+    console.log(
+      `${colors.green}Task ID ${id} deleted successfully!${colors.reset}`
+    );
   } else {
     console.log(`${colors.red}Task with ID ${id} not found.${colors.reset}`);
   }
@@ -112,7 +130,9 @@ function markInProgress(id) {
     task.inProgress = true;
     task.completed = false;
     writeTasks(tasks);
-    console.log(`${colors.yellow}Task ID ${id} marked as in-progress.${colors.reset}`);
+    console.log(
+      `${colors.yellow}Task ID ${id} marked as in-progress.${colors.reset}`
+    );
   } else {
     console.log(`${colors.red}Task with ID ${id} not found.${colors.reset}`);
   }
@@ -135,58 +155,85 @@ function markDone(id) {
 
 // Command-line interface logic
 const args = process.argv.slice(2);
-if (args.includes("add")) {
+if (args[0] === "add") {
   const taskDescription = args.slice(1).join(" ");
   if (!taskDescription) {
-    console.log(`${colors.red}Please provide a task description.${colors.reset}`);
-    console.log(`${colors.yellow}Sample: node index.js add "Drink Water"${colors.reset}`);
+    console.log(
+      `${colors.red}Please provide a task description.${colors.reset}`
+    );
+    console.log(
+      `${colors.yellow}Sample: node index.js add "Drink Water"${colors.reset}`
+    );
   } else {
     addTask(taskDescription);
   }
-} else if (args.includes("list")) {
+} else if (args[0] === "list") {
   const status = args[1]; // "done", "to-do", "in-progress" (optional)
   listTasks(status);
-} else if (args.includes("update")) {
+} else if (args[0] === "update") {
   const id = args[1];
   const newDescription = args.slice(2).join(" ");
   if (!id || !newDescription) {
-    console.log(`${colors.red}Please provide a task ID and new description.${colors.reset}`);
-    console.log(`${colors.yellow}Sample: node index.js update 1 "Updated task description"${colors.reset}`);
+    console.log(
+      `${colors.red}Please provide a task ID and new description.${colors.reset}`
+    );
+    console.log(
+      `${colors.yellow}Sample: node index.js update 1 "Updated task description"${colors.reset}`
+    );
   } else {
     updateTask(id, newDescription);
   }
-} else if (args.includes("delete")) {
+} else if (args[0] === "delete") {
   const id = args[1];
   if (!id) {
     console.log(`${colors.red}Please provide a task ID.${colors.reset}`);
-    console.log(`${colors.yellow}Sample: node index.js delete 1${colors.reset}`);
+    console.log(
+      `${colors.yellow}Sample: node index.js delete 1${colors.reset}`
+    );
   } else {
     deleteTask(id);
   }
-} else if (args.includes("mark-in-progress")) {
+} else if (args[0] === "mark-in-progress") {
   const id = args[1];
   if (!id) {
     console.log(`${colors.red}Please provide a task ID.${colors.reset}`);
-    console.log(`${colors.yellow}Sample: node index.js mark-in-progress 1${colors.reset}`);
+    console.log(
+      `${colors.yellow}Sample: node index.js mark-in-progress 1${colors.reset}`
+    );
   } else {
     markInProgress(id);
   }
-} else if (args.includes("mark-done")) {
+} else if (args[0] === "mark-done") {
   const id = args[1];
   if (!id) {
     console.log(`${colors.red}Please provide a task ID.${colors.reset}`);
-    console.log(`${colors.yellow}Sample: node index.js mark-done 1${colors.reset}`);
+    console.log(
+      `${colors.yellow}Sample: node index.js mark-done 1${colors.reset}`
+    );
   } else {
     markDone(id);
   }
 } else {
-  console.log(`${colors.cyan}Usage: node index.js <command> [arguments]${colors.reset}`);
+  console.log(
+    `${colors.cyan}Usage: node index.js <command> [arguments]${colors.reset}`
+  );
   console.log(`${colors.cyan}Commands:${colors.reset}`);
-  console.log(`${colors.yellow}  add <task description>            - Add a new task${colors.reset}`);
-  console.log(`${colors.yellow}  list [status]                     - List tasks (status: done, to-do, in-progress)${colors.reset}`);
-  console.log(`${colors.yellow}  update <id> <new description>     - Update a task by ID${colors.reset}`);
-  console.log(`${colors.yellow}  delete <id>                       - Delete a task by ID${colors.reset}`);
-  console.log(`${colors.yellow}  mark-in-progress <id>             - Mark a task as in-progress by ID${colors.reset}`);
-  console.log(`${colors.yellow}  mark-done <id>                    - Mark a task as done by ID${colors.reset}`);
+  console.log(
+    `${colors.yellow}  add <task description>            - Add a new task${colors.reset}`
+  );
+  console.log(
+    `${colors.yellow}  list [status]                     - List tasks (status: done, to-do, in-progress)${colors.reset}`
+  );
+  console.log(
+    `${colors.yellow}  update <id> <new description>     - Update a task by ID${colors.reset}`
+  );
+  console.log(
+    `${colors.yellow}  delete <id>                       - Delete a task by ID${colors.reset}`
+  );
+  console.log(
+    `${colors.yellow}  mark-in-progress <id>             - Mark a task as in-progress by ID${colors.reset}`
+  );
+  console.log(
+    `${colors.yellow}  mark-done <id>                    - Mark a task as done by ID${colors.reset}`
+  );
 }
-
